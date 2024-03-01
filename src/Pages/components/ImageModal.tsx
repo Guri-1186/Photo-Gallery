@@ -1,4 +1,3 @@
-// ImageModal.tsx
 import React from "react";
 
 interface ImageModalProps {
