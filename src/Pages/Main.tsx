@@ -95,7 +95,7 @@ const Main: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Main Page</h1>
       <input
         type="text"
@@ -103,17 +103,20 @@ const Main: React.FC = () => {
         value={searchTerm}
         onChange={handleSearchChange}
       />
-      <div>
+      <div className="images">
         {images.map((image) => (
           <img
             src={image.urls.small}
             alt={image.alt_description}
             // key={`${image.id}-${index}`}
             key={image.id}
+            className="main-image"
             onClick={() => handleClick(image.id)}
           />
         ))}
-        <div ref={loaderRef}>Loading...</div>
+        <div ref={loaderRef} className="loader">
+          Loading...
+        </div>
       </div>
       {selectedImage && (
         <ImageModal image={selectedImage} onClose={closeModal} />
