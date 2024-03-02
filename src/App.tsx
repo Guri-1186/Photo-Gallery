@@ -3,8 +3,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./Pages/Main";
 import History from "./Pages/History";
 
-//
-
 export default function App() {
   return (
     <BrowserRouter>

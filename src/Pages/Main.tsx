@@ -1,34 +1,51 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+// import Modal from "react-modal";
 import ImageModal from "./components/ImageModal";
 
 const Main: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [images, setImages] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const [showModal, setShowModal] = useState(false);
-  const [modalData, setModalData] = useState<any>({
-    imageUrl: "",
-    altDescription: "",
-    downloads: 0,
-    views: 0,
-    likes: 0,
-  });
 
-  const bottomBoundaryRef = useRef<HTMLDivElement>(null);
+  const loaderRef = useRef<HTMLDivElement>(null);
+
+  const [selectedImage, setSelectedImage] = useState<any>(null);
+
+  const handleClick = async (id: string) => {
+    try {
+      const response = await axios.get(
+        `https://api.unsplash.com/photos/${id}`,
+        {
+          params: {
+            client_id: "xO3RENdr6FIzpTeDntF8gCRDWh0Eo6LPCz4Z8XKg_Xc",
+          },
+        }
+      );
+      setSelectedImage(response.data);
+    } catch (error) {
+      console.error("Error fetching image:", error);
+    }
+  };
+  const closeModal = () => {
+    setSelectedImage(null);
+  };
+
+  useEffect(() => {
+    fetchImages();
+  }, [page]);
 
   const fetchImages = async () => {
+    const searchTerms = searchTerm || undefined;
     try {
-      setLoading(true);
       const response = await axios.get(
-        searchTerm
+        searchTerms
           ? "https://api.unsplash.com/search/photos"
           : "https://api.unsplash.com/photos",
         {
-          params: searchTerm
+          params: searchTerms
             ? {
-                query: searchTerm,
+                query: searchTerms,
                 per_page: 20,
                 page,
                 client_id: "xO3RENdr6FIzpTeDntF8gCRDWh0Eo6LPCz4Z8XKg_Xc",
@@ -41,27 +58,12 @@ const Main: React.FC = () => {
               },
         }
       );
-      const newImages =
-        page === 1
-          ? response.data.results || response.data
-          : [...images, ...(response.data.results || response.data)];
-      setImages(newImages);
-      localStorage.setItem("cachedImages", JSON.stringify(newImages));
+      const newImages = response.data.results || response.data;
+      setImages((prevImages) => [...prevImages, ...newImages]);
     } catch (error) {
       console.error("Error fetching images:", error);
-    } finally {
-      setLoading(false);
     }
   };
-
-  useEffect(() => {
-    const cachedImages = localStorage.getItem("cachedImages");
-    if (cachedImages) {
-      setImages(JSON.parse(cachedImages));
-    } else {
-      fetchImages();
-    }
-  }, [searchTerm, page]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -73,31 +75,21 @@ const Main: React.FC = () => {
       { threshold: 1 }
     );
 
-    if (bottomBoundaryRef.current) {
-      observer.observe(bottomBoundaryRef.current);
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
     }
 
     return () => {
-      if (bottomBoundaryRef.current) {
-        observer.unobserve(bottomBoundaryRef.current);
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current);
       }
     };
   }, []);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
+    setImages([]);
     setPage(1);
-  };
-
-  const handleImageClick = (
-    imageUrl: string,
-    altDescription: string,
-    downloads: number,
-    views: number,
-    likes: number
-  ) => {
-    setModalData({ imageUrl, altDescription, downloads, views, likes });
-    setShowModal(true);
   };
 
   return (
@@ -110,34 +102,18 @@ const Main: React.FC = () => {
         onChange={handleSearchChange}
       />
       <div>
-        {images.map((image, index) => (
+        {images.map((image) => (
           <img
-            key={index}
-            src={image.urls.regular}
+            src={image.urls.small}
             alt={image.alt_description}
-            onClick={() =>
-              handleImageClick(
-                image.urls.regular,
-                image.alt_description,
-                image.downloads.total,
-                image.views.total,
-                image.likes.total
-              )
-            }
+            key={image.id}
+            onClick={() => handleClick(image.id)}
           />
         ))}
+        <div ref={loaderRef}>Loading...</div>
       </div>
-      <div ref={bottomBoundaryRef}></div>
-      {loading && <p>Loading...</p>}
-      {showModal && (
-        <ImageModal
-          imageUrl={modalData.imageUrl}
-          altDescription={modalData.altDescription}
-          downloads={modalData.downloads}
-          views={modalData.views}
-          likes={modalData.likes}
-          onClose={() => setShowModal(false)}
-        />
+      {selectedImage && (
+        <ImageModal image={selectedImage} onClose={closeModal} />
       )}
     </div>
   );

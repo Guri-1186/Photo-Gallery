@@ -1,30 +1,28 @@
 import React from "react";
 
 interface ImageModalProps {
-  imageUrl: string;
-  altDescription: string;
-  downloads: number;
-  views: number;
-  likes: number;
+  image: any;
   onClose: () => void;
 }
 
-const ImageModal: React.FC<ImageModalProps> = ({
-  imageUrl,
-  altDescription,
-  downloads,
-  views,
-  likes,
-  onClose,
-}) => {
+const ImageModal: React.FC<ImageModalProps> = ({ image, onClose }) => {
   return (
-    <div className="modal">
-      <div className="modal-content">
-        <img src={imageUrl} alt={altDescription} />
-        <p>Downloads: {downloads}</p>
-        <p>Views: {views}</p>
-        <p>Likes: {likes}</p>
-        <button onClick={onClose}>Close</button>
+    <div className="modal-overlay">
+      <div className="modal">
+        <div className="modal-header">
+          <h2>Image Details</h2>
+          <button className="close-button" onClick={onClose}>
+            &times;
+          </button>
+        </div>
+        <div className="modal-body">
+          <img src={image.urls.full} alt={image.alt_description} />
+          <div className="image-details">
+            <p>Downloads: {image.downloads}</p>
+            <p>Views: {image.views}</p>
+            <p>Likes: {image.likes}</p>
+          </div>
+        </div>
       </div>
     </div>
   );
