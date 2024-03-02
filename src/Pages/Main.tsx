@@ -13,6 +13,7 @@ const Main: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<any>(null);
 
   const handleClick = async (id: string) => {
+    console.log("Image clicked with id:", id); //this line
     try {
       const response = await axios.get(
         `https://api.unsplash.com/photos/${id}`,
@@ -22,6 +23,7 @@ const Main: React.FC = () => {
           },
         }
       );
+      console.log("Response data:", response.data); //this line
       setSelectedImage(response.data);
     } catch (error) {
       console.error("Error fetching image:", error);
@@ -106,6 +108,7 @@ const Main: React.FC = () => {
           <img
             src={image.urls.small}
             alt={image.alt_description}
+            // key={`${image.id}-${index}`}
             key={image.id}
             onClick={() => handleClick(image.id)}
           />

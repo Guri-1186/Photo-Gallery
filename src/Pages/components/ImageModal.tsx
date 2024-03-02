@@ -1,4 +1,5 @@
 import React from "react";
+import "./ImageModal.css";
 
 interface ImageModalProps {
   image: any;
