@@ -31,5 +31,5 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Author:
 
-- GitHub - [Guri-1186](https://github.com/Guri-1186)
-  -Linkedin- [Guranda jikia](https://www.linkedin.com/in/guranda-jikia-3aaa5118b/)
+-**GitHub** - [Guri-1186](https://github.com/Guri-1186)
+-**Linkedin** - [Guranda jikia](https://www.linkedin.com/in/guranda-jikia-3aaa5118b/)
