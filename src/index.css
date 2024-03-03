@@ -26,3 +26,22 @@ body {
   background-color: var(--color-background-900);
   padding: 2.4rem;
 }
+.img-conatiner {
+  height: 25rem;
+  padding: 1rem;
+}
+.each-img {
+  height: 100%;
+  margin: 1.5rem;
+  border: 2px solid transparent;
+  border-radius: 1rem;
+}
+
+.primary-heading {
+  text-align: center;
+}
+
+.center-items {
+  text-align: center;
+  margin: 2rem;
+}

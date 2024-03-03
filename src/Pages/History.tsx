@@ -42,10 +42,12 @@ const History: React.FC = () => {
   };
   return (
     <div>
-      <h1>History Page</h1>
-      <NavigationButton to="/Main" className="navigationButton">
-        Main
-      </NavigationButton>
+      <h1 className="primary-heading">History Page</h1>
+      <div className="center-items">
+        <NavigationButton to="/" className="navigationButton">
+          Main
+        </NavigationButton>
+      </div>
       {cachedQueries.map((term: string, index: number) => (
         <li key={index} onClick={() => handleClick(term)}>
           {term}

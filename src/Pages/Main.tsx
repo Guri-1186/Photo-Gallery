@@ -5,6 +5,7 @@ import ImageModal from "./components/ImageModal";
 import "./components/NavigationButton.css";
 
 const Main: React.FC = () => {
+  const myApiKey = "xO3RENdr6FIzpTeDntF8gCRDWh0Eo6LPCz4Z8XKg_Xc";
   const [searchTerm, setSearchTerm] = useState("");
   const [images, setImages] = useState<any[]>([]);
   const [page, setPage] = useState(1);
@@ -20,7 +21,7 @@ const Main: React.FC = () => {
         `https://api.unsplash.com/photos/${id}`,
         {
           params: {
-            client_id: "xO3RENdr6FIzpTeDntF8gCRDWh0Eo6LPCz4Z8XKg_Xc",
+            client_id: myApiKey,
           },
         }
       );
@@ -51,13 +52,13 @@ const Main: React.FC = () => {
                 query: searchTerms,
                 per_page: 20,
                 page,
-                client_id: "xO3RENdr6FIzpTeDntF8gCRDWh0Eo6LPCz4Z8XKg_Xc",
+                client_id: myApiKey,
               }
             : {
                 order_by: "popular",
                 per_page: 20,
                 page,
-                client_id: "xO3RENdr6FIzpTeDntF8gCRDWh0Eo6LPCz4Z8XKg_Xc",
+                client_id: myApiKey,
               },
         }
       );
@@ -97,25 +98,28 @@ const Main: React.FC = () => {
 
   return (
     <div>
-      <h1>Main Page</h1>
-      <NavigationButton to="/History" className="navigationButton">
-        History
-      </NavigationButton>
-
-      <input
-        type="text"
-        placeholder="Search images..."
-        value={searchTerm}
-        onChange={handleSearchChange}
-      />
-      <div>
-        {images.map((image) => (
+      <h1 className="primary-heading">Main Page</h1>
+      <div className="center-items">
+        <NavigationButton to="/History" className="navigationButton">
+          History
+        </NavigationButton>
+      </div>
+      <div className="center-items">
+        <input
+          type="text"
+          placeholder="Search images..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+      </div>
+      <div className="img-conatiner">
+        {images.map((image, index: number) => (
           <img
             src={image.urls.small}
             alt={image.alt_description}
-            // key={`${image.id}-${index}`}
-            key={image.id}
+            key={`${image.id}-${index}`}
             onClick={() => handleClick(image.id)}
+            className="each-img"
           />
         ))}
         <div ref={loaderRef}>Loading...</div>
