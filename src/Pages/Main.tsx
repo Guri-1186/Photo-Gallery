@@ -40,30 +40,37 @@ const Main: React.FC = () => {
   }, [page]);
 
   const fetchImages = async () => {
-    const searchTerms = searchTerm || undefined;
+    const searchTerms = searchTerm || "popular";
     try {
-      const response = await axios.get(
-        searchTerms
-          ? "https://api.unsplash.com/search/photos"
-          : "https://api.unsplash.com/photos",
-        {
-          params: searchTerms
-            ? {
-                query: searchTerms,
-                per_page: 20,
-                page,
-                client_id: myApiKey,
-              }
-            : {
-                order_by: "popular",
-                per_page: 20,
-                page,
-                client_id: myApiKey,
-              },
-        }
-      );
-      const newImages = response.data.results || response.data;
-      setImages((prevImages) => [...prevImages, ...newImages]);
+      // Check if the images for the search term and page are in localStorage
+      const cachedImages = localStorage.getItem(`${searchTerms}-${page}`);
+      if (cachedImages) {
+        // If the images are in localStorage, parse them and set them to the state
+        setImages(JSON.parse(cachedImages));
+      } else {
+        // If the images are not in localStorage, make an API call
+        const response = await axios.get(
+          searchTerms !== "popular"
+            ? "https://api.unsplash.com/search/photos"
+            : "https://api.unsplash.com/photos",
+          {
+            params: {
+              query: searchTerms !== "popular" ? searchTerms : undefined,
+              order_by: "popular",
+              per_page: 20,
+              page,
+              client_id: "xO3RENdr6FIzpTeDntF8gCRDWh0Eo6LPCz4Z8XKg_Xc",
+            },
+          }
+        );
+        const newImages = response.data.results || response.data;
+        setImages((prevImages) => [...prevImages, ...newImages]);
+        // Store the images in localStorage
+        localStorage.setItem(
+          `${searchTerms}-${page}`,
+          JSON.stringify(newImages)
+        );
+      }
     } catch (error) {
       console.error("Error fetching images:", error);
     }
