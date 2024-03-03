@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-// import Modal from "react-modal";
+import NavigationButton from "./components/NavigationButton";
 import ImageModal from "./components/ImageModal";
+import "./components/NavigationButton.css";
 
 const Main: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -95,28 +96,29 @@ const Main: React.FC = () => {
   };
 
   return (
-    <div className="container">
+    <div>
       <h1>Main Page</h1>
+      <NavigationButton to="/History" className="navigationButton">
+        History
+      </NavigationButton>
+
       <input
         type="text"
         placeholder="Search images..."
         value={searchTerm}
         onChange={handleSearchChange}
       />
-      <div className="images">
+      <div>
         {images.map((image) => (
           <img
             src={image.urls.small}
             alt={image.alt_description}
             // key={`${image.id}-${index}`}
             key={image.id}
-            className="main-image"
             onClick={() => handleClick(image.id)}
           />
         ))}
-        <div ref={loaderRef} className="loader">
-          Loading...
-        </div>
+        <div ref={loaderRef}>Loading...</div>
       </div>
       {selectedImage && (
         <ImageModal image={selectedImage} onClose={closeModal} />

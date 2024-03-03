@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import NavigationButton from "./components/NavigationButton";
+import "./components/NavigationButton.css";
 
 const fetchCachedSearchQueries = () => {
   const queries: any = [];
@@ -40,6 +42,10 @@ const History: React.FC = () => {
   };
   return (
     <div>
+      <h1>History Page</h1>
+      <NavigationButton to="/Main" className="navigationButton">
+        Main
+      </NavigationButton>
       {cachedQueries.map((term: string, index: number) => (
         <li key={index} onClick={() => handleClick(term)}>
           {term}
