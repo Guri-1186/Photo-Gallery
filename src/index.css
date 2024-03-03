@@ -45,3 +45,27 @@ body {
   text-align: center;
   margin: 2rem;
 }
+
+.btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.history-button {
+  background-image: linear-gradient(-180deg, #6741d9, #7950f2);
+
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: bold;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 20px;
+  text-align: center;
+  transition: box-shadow 0.2s;
+  text-transform: uppercase;
+}

@@ -15,7 +15,6 @@ const Main: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<any>(null);
 
   const handleClick = async (id: string) => {
-    console.log("Image clicked with id:", id); //this line
     try {
       const response = await axios.get(
         `https://api.unsplash.com/photos/${id}`,
@@ -25,7 +24,7 @@ const Main: React.FC = () => {
           },
         }
       );
-      console.log("Response data:", response.data); //this line
+
       setSelectedImage(response.data);
     } catch (error) {
       console.error("Error fetching image:", error);
@@ -42,13 +41,10 @@ const Main: React.FC = () => {
   const fetchImages = async () => {
     const searchTerms = searchTerm || "popular";
     try {
-      // Check if the images for the search term and page are in localStorage
       const cachedImages = localStorage.getItem(`${searchTerms}-${page}`);
       if (cachedImages) {
-        // If the images are in localStorage, parse them and set them to the state
         setImages(JSON.parse(cachedImages));
       } else {
-        // If the images are not in localStorage, make an API call
         const response = await axios.get(
           searchTerms !== "popular"
             ? "https://api.unsplash.com/search/photos"
@@ -65,7 +61,7 @@ const Main: React.FC = () => {
         );
         const newImages = response.data.results || response.data;
         setImages((prevImages) => [...prevImages, ...newImages]);
-        // Store the images in localStorage
+
         localStorage.setItem(
           `${searchTerms}-${page}`,
           JSON.stringify(newImages)

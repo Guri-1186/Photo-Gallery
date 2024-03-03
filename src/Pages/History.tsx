@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import NavigationButton from "./components/NavigationButton";
 import "./components/NavigationButton.css";
@@ -48,18 +48,27 @@ const History: React.FC = () => {
           Main
         </NavigationButton>
       </div>
-      {cachedQueries.map((term: string, index: number) => (
-        <li key={index} onClick={() => handleClick(term)}>
-          {term}
-        </li>
-      ))}
-      {images.map((image: any) => (
-        <img
-          src={image.urls.small}
-          alt={image.alt_description}
-          key={image.id}
-        />
-      ))}
+      <div className="btn">
+        {cachedQueries.map((term: string, index: number) => (
+          <button
+            key={index}
+            onClick={() => handleClick(term)}
+            className="history-button"
+          >
+            {term}
+          </button>
+        ))}
+      </div>
+      <div className="img-conatiner">
+        {images.map((image: any) => (
+          <img
+            src={image.urls.small}
+            alt={image.alt_description}
+            key={image.id}
+            className="each-img"
+          />
+        ))}
+      </div>
     </div>
   );
 };
