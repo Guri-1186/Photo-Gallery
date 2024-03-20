@@ -1,4 +1,4 @@
-# Challange:
+# Challange: Photo Gallery react-app
 - The application has two pages: "Main" and "History", implemented using React Router.
 - The "Main" page displays the 20 most popular images retrieved from the Unsplash API.
 - On the "Main" page, there is a text box named "Search" that allows users to update the displayed images based on relevant search terms. The images are updated dynamically as the user types in the search box.
