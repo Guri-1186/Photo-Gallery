@@ -1,20 +1,14 @@
-# The challenge:
-
-დაწერეთ ფოტო გალერეის აპლიკაცია, რომელსაც ექნება შემდეგი ფუნქციონალი:
-
-აპლიკაციას უნდა ჰქონდეს 2 გვერდი: „მთავარი“ და „ისტორია“
-მთავარ გვერდზე აჩვენეთ 20 ყველაზე პოპულარული სურათი
-მთავარ გვერდზე დაამატეთ ტექსტური ველი სახელად „ძებნა“, ტექსტში ინფორმაციის ჩაწერის დროს განაახლეთ სურათები შესაბამისი საძიებო სიტყვის მიხედვით. (ძებნა ღილაკი არ არის საჭირო)
-გამოიყენეთ ქეშირების მექანიზმი. მაგალითად, თუ ერთხელ მოვძებნე home, შემდეგ car, ხოლო შემდეგ ისევ home, მონაცემები აჩვენეთ ქეშიდან და ზედმეტი API მოთხოვნები არ გააკეთოთ.
-ისტორიის გვერდზე უნდა ვხედავდე ყველა საძიებო სიტყვას, რომლითაც სურათები მოვძებნე. თითოეულზე დაჭერისას უნდა მიჩვენოს შესაბამისი სურათები.
-სურათების ჩვენებისას გამოიყენეთ infinite scroll როგორც მთავარ, ასევე ისტორიის გვერდზეც
-სურათზე დაჭერისას სურათის სრულ ვერსიასთან ერთად აჩვენეთ მისი გადმოწერის, ნახვების და მოწონებების რაოდენობები მოდალურ ფანჯარაში.
-გამოიყენეთ შემდეგი API: https://unsplash.com/documentation
-შენიშვნა:
-არ გამოიყენოთ მზა კომპონენტების ბიბლიოთეკები, როგორიცაა mui, antd, bootstrap და ა.შ.
-infinite scroll -ის ფუნქციონალი დაწერეთ დამოუკიდებლად.
-გამოიყენეთ typescript
-
+# Challange:
+- The application has two pages: "Main" and "History", implemented using React Router.
+- The "Main" page displays the 20 most popular images retrieved from the Unsplash API.
+- On the "Main" page, there is a text box named "Search" that allows users to update the displayed images based on relevant search terms. The images are updated dynamically as the user types in the search box.
+- A caching mechanism is implemented to store previously fetched data. If a user searches for a term that has been searched before, the data is retrieved from the cache instead of making extra API requests.
+The "History" page displays all the search terms used by the user to search for images.
+Infinite scroll functionality is implemented on both the "Main" and "History" pages, allowing users to load more images as they scroll down the page.
+When an image is clicked, a modal window displays the number of downloads, views, and likes, along with the full version of the image.
+The Unsplash API is used for fetching images and related data.
+Infinite scroll functionality is implemented independently, without relying on external libraries.
+TypeScript is used for type safety throughout the application, ensuring better code quality and maintainability.
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Built with:
